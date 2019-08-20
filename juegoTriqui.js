@@ -25,7 +25,7 @@ class JuegoTriqui {
         let cuadroId = cuadro.getAttribute("id");
 
         this.jugadasJugador.push(parseInt(cuadroId.slice(cuadroId.length - 1, cuadroId.length)));
-        this.comprobarSiGana(this.jugadasJugador, "Jugador1");
+        this.gano = this.comprobarSiGana(this.jugadasJugador, "Jugador1");
         this.turnoJugador = false;
         return [true, this.gano];
 
@@ -37,12 +37,35 @@ class JuegoTriqui {
 
         this.jugadasComputador.push(parseInt(cuadroId.slice(cuadroId.length - 1, cuadroId.length)));
         this.turnoJugador = true;
-        this.comprobarSiGana(this.jugadasComputador, "Jugador2");
+        this.gano= this.comprobarSiGana(this.jugadasComputador, "Jugador2");
         return [false, this.gano];
 
     }
 
     comprobarSiGana(array, jugador) {
+        if (array.includes(5)) {
+            for (let i = 0; i < 2; i++) {
+                let x = i == 0 ? 1 : -1;
+                if (array.includes(2 - x) && array.includes(8 + x)) {
+                    return [jugador, [], true];
+                }
+            }
+        }
+
+        for (let i = 0; i < 3; i++) {
+            let results = { h: 0, v: 0 };
+            for (let j = 0; j < 3; j++) {
+                results.h += array.includes(j + i * 3 + 1) ? 1 : 0;
+                results.v += array.includes(i + j * 3 + 1) ? 1 : 0;
+            }
+            if (results.h == 3 || results.v == 3) {
+                return [jugador, [], true];
+            }
+        }
+        return [jugador, [], false];
+    }
+
+    /* comprobarSiGana(array, jugador) {
         let posicionesGanadoras = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 5, 9], [1, 5, 9], [3, 5, 7]];
         //Loop de los arrays de las posiciones que son ganadoras
         for (let ganador of posicionesGanadoras) {
@@ -70,5 +93,5 @@ class JuegoTriqui {
             this.gano = [jugador, [], false]
             
         }
-    }
+    } */
 }

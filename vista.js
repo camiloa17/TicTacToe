@@ -8,8 +8,11 @@ class Vista {
 
             if (this.juegoTriqui.jugando == true) {
                 if (event.target.innerHTML == "") {
+
                     let movimiento = this.juegoTriqui.movimiento(elementId);
+
                     this.agregarMovimiento(movimiento[0], elementId);
+                    
                     if (movimiento[1] !== undefined) {
                         if (movimiento[1][2]) {
                             this.ganador(movimiento[1]);
