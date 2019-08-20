@@ -1,0 +1,38 @@
+body{
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.area-juego{
+    margin-left:35%;
+    margin-right: 35%;
+    display:grid;
+    grid-template-columns: 120px 120px 120px;
+    grid-template-rows: 120px 120px 120px;
+    align-items: center;
+}
+
+.cuadros{
+    height:120px;
+    width:120px;
+}
+
+#cuadro1,
+#cuadro2,
+#cuadro4,
+#cuadro5{
+    border-bottom: 1px solid blue;
+border-right: 1px solid blue;
+}
+
+#cuadro3,
+#cuadro6{
+    border-bottom: 1px solid blue;
+}
+
+#cuadro7,
+#cuadro8{
+    border-right: 1px solid blue;
+}
+
+
