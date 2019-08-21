@@ -10,13 +10,14 @@ class Vista {
                 if (event.target.innerHTML == "") {
 
                     let movimiento = this.juegoTriqui.movimiento(elementId);
+                    
 
                     this.agregarMovimiento(movimiento[0], elementId);
-                    
-                    if (movimiento[1] !== undefined) {
-                        if (movimiento[1][2]) {
-                            this.ganador(movimiento[1]);
-                        }
+
+                        if (movimiento[1][1].gano==true) {
+                            console.log(movimiento[1][1].linea);
+                            this.ganador(movimiento[1][0]);
+                        
                     }
                 }
             }
@@ -24,7 +25,7 @@ class Vista {
 
         //Cambia el estado del juego a jugando
         document.querySelector("body").addEventListener("keydown", () => {
-            if (this.juegoTriqui.jugando == false && this.juegoTriqui.gano[2] == false) {
+            if (this.juegoTriqui.jugando == false && this.juegoTriqui.gano[1].gano == false) {
                 this.juegoTriqui.jugando = true;
                 document.querySelector("h2").innerHTML = "Es el Turno del J1";
             }
@@ -42,7 +43,7 @@ class Vista {
         }
     }
     ganador(ganador) {
-        document.querySelector("h2").innerHTML = `Gano la partida el ${ganador[0]}`
+        document.querySelector("h2").innerHTML = `Gano la partida el ${ganador}`
     }
 
 

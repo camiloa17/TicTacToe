@@ -9,7 +9,7 @@ class JuegoTriqui {
         //Para ver si ya inicio el juego o no.
         this.jugando = false;
         //ver quien gano y con que jugadas.
-        this.gano = ["jugador", [], false];
+        this.gano=["Jugador1",{gano:false}];
     }
 
     movimiento(movida) {
@@ -25,10 +25,9 @@ class JuegoTriqui {
         let cuadroId = cuadro.getAttribute("id");
 
         this.jugadasJugador.push(parseInt(cuadroId.slice(cuadroId.length - 1, cuadroId.length)));
-        this.gano = this.comprobarSiGana(this.jugadasJugador, "Jugador1");
+        this.gano = ["jugador1", this.comprobarSiGana(this.jugadasJugador)];;
         this.turnoJugador = false;
         return [true, this.gano];
-
     }
 
     jugador2(movida) {
@@ -37,32 +36,38 @@ class JuegoTriqui {
 
         this.jugadasComputador.push(parseInt(cuadroId.slice(cuadroId.length - 1, cuadroId.length)));
         this.turnoJugador = true;
-        this.gano= this.comprobarSiGana(this.jugadasComputador, "Jugador2");
+        this.gano = ["jugador2",this.comprobarSiGana(this.jugadasComputador)];
         return [false, this.gano];
 
     }
 
-    comprobarSiGana(array, jugador) {
+
+
+    comprobarSiGana(array) {
         if (array.includes(5)) {
             for (let i = 0; i < 2; i++) {
                 let x = i == 0 ? 1 : -1;
                 if (array.includes(2 - x) && array.includes(8 + x)) {
-                    return [jugador, [], true];
+                    this.jugando=false;
+                    return { gano: true, linea: [2 - x, 5, 8 + x] };
                 }
             }
         }
 
         for (let i = 0; i < 3; i++) {
-            let results = { h: 0, v: 0 };
+            let results = { h: 0, v: 0, hA: [], vA: [] };
             for (let j = 0; j < 3; j++) {
                 results.h += array.includes(j + i * 3 + 1) ? 1 : 0;
+                results.hA.push(j + i * 3 + 1);
                 results.v += array.includes(i + j * 3 + 1) ? 1 : 0;
+                results.vA.push(i + j * 3 + 1);
             }
             if (results.h == 3 || results.v == 3) {
-                return [jugador, [], true];
+                this.jugando=false;
+                return { gano: true, linea: results.h == 3 ? results.hA : results.vA };
             }
         }
-        return [jugador, [], false];
+        return {gano:false};
     }
 
     /* comprobarSiGana(array, jugador) {
