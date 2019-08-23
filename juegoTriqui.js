@@ -9,7 +9,7 @@ class JuegoTriqui {
         //Para ver si ya inicio el juego o no.
         this.jugando = false;
         //ver quien gano y con que jugadas.
-        this.gano=["Jugador1",{gano:false}];
+        this.gano = ["Jugador1", { gano: false }];
     }
 
     movimiento(movida) {
@@ -36,10 +36,44 @@ class JuegoTriqui {
 
         this.jugadasComputador.push(parseInt(cuadroId.slice(cuadroId.length - 1, cuadroId.length)));
         this.turnoJugador = true;
-        this.gano = ["jugador2",this.comprobarSiGana(this.jugadasComputador)];
+        this.gano = ["jugador2", this.comprobarSiGana(this.jugadasComputador)];
         return [false, this.gano];
-
     }
+
+    computador() {
+        if (!this.turnoJugador) {
+            if(this.jugando){
+            while (true && this.jugando==true) {
+                let posicion = this.loopComputador();
+
+
+                if (posicion > 0 || posicion <= 9) {
+
+                    if (!this.jugadasJugador.includes(posicion) && (!this.jugadasComputador.includes(posicion))) {
+
+                        return [this.jugador2("cuadro" + posicion), "cuadro" + posicion];
+
+                    }
+
+                }
+            }
+        }else{
+            return this.gano;
+        }
+    }
+}
+
+    loopComputador() {
+        let posicion;
+
+        do {
+            posicion = Math.round(Math.random() * 9);
+
+        } while (posicion == 0);
+
+        return posicion;
+    }
+
 
 
 
@@ -48,7 +82,6 @@ class JuegoTriqui {
             for (let i = 0; i < 2; i++) {
                 let x = i == 0 ? 1 : -1;
                 if (array.includes(2 - x) && array.includes(8 + x)) {
-                    this.jugando=false;
                     return { gano: true, linea: [2 - x, 5, 8 + x] };
                 }
             }
@@ -63,11 +96,10 @@ class JuegoTriqui {
                 results.vA.push(i + j * 3 + 1);
             }
             if (results.h == 3 || results.v == 3) {
-                this.jugando=false;
                 return { gano: true, linea: results.h == 3 ? results.hA : results.vA };
             }
         }
-        return {gano:false};
+        return { gano: false };
     }
 
     /* comprobarSiGana(array, jugador) {
